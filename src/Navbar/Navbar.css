@@ -1,0 +1,10 @@
+ul a {
+    margin-right: 20px;
+    color: rgb(14, 22, 182);
+    text-align: center;
+    overflow: hidden;
+}
+
+ul {
+    overflow: hidden;
+}
