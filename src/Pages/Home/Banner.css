@@ -1,0 +1,50 @@
+.main {
+    /* position: absolute; */
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .1);
+    /* background-color: #000000cc; */
+}
+
+@media screen and (max-width:768px) {
+    .main {
+        width: 100%;
+        height: 250vh;
+    }
+
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 300px;
+    }
+}
