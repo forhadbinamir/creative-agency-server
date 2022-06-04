@@ -1,6 +1,6 @@
 .navbar {
     height: 80px;
-    background-color: transparent;
+    /* background-color: transparent; */
     position: absolute;
     top: 0;
     font-size: 1.2rem;
