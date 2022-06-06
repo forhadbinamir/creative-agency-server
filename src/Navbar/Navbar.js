@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { MenuIcon, XIcon } from '@heroicons/react/solid'
+import logo from '../images/logo/logo-computer.png'
 import './Navbar.css'
 const Navbar = () => {
     const [open, setOpen] = useState(false)
     const { pathname } = useLocation()
 
+
     return (
-        <nav style={{ backgroundColor: `${(pathname === '/home' || pathname === '/') ? 'transparent' : '#22c55e'} ` }} className={`navbar  flex justify-between items-center`}>
-            <Link to='/' className='text-white pl-12 w-32'>Creative</Link>
-            <div onClick={() => setOpen(!open)} className='w-10 h-10 md:hidden'>
+        <nav style={{ backgroundColor: `${(pathname === '/home' || pathname === '/') ? 'transparent' : '#22c55e'} ` }} className={`navbar flex justify-between items-center`}>
+            <Link to='/' className='text-white pl-12 w-32 '><img className='rounded-lg' src={logo} alt="" /></Link>
+            <div onClick={() => setOpen(!open)} className='w-10 h-10 md:hidden text-white'>
                 {open ? <XIcon></XIcon> : <MenuIcon ></MenuIcon>}
             </div>
             <ul className={`flex flex-col md:flex-row justify-end w-full absolute md:sticky duration-300 ease-in pr-12 ${open ? 'top-20' : 'top-[-220px]'}`}>
