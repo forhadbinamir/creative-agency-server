@@ -7,21 +7,21 @@ const ClientsFeedback = () => {
             picture: 'https://i.ibb.co/k0QcJVR/customer-3.png',
             name: 'Nash Patrik',
             designation: 'CEO Manpol',
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.Quia dolorem ex provident error necessitatibus eligendi, ullam magnam esse cum tenetur amet, est quis pariatur a sed libero earum quod sapiente!"
+            description: "If you have ever taken a design or art class, you may already be familiar with design critiques. But as you grow as a designer, how do you know what to look out for when giving and receiving a design critique? we’ll share our tips.!"
         },
         {
             _id: 2,
             picture: 'https://i.ibb.co/gWh50d7/customer-1.png',
             name: 'Mirian Baron',
             designation: 'CEO Manpol',
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.Quia dolorem ex provident error necessitatibus eligendi, ullam magnam esse cum tenetur amet, est quis pariatur a sed libero earum quod sapiente!"
+            description: " You may already be familiar with design critiques. But as you grow as a designer, how do you know what to look out for when giving and receiving a design critique? In this article, we’ll share our tips."
         },
         {
             _id: 3,
             picture: 'https://i.ibb.co/SdQ2H4f/customer-2.png',
             name: 'Bria Malone',
             designation: 'CEO Manpol',
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.Quia dolorem ex provident error necessitatibus eligendi, ullam magnam esse cum tenetur amet, est quis pariatur a sed libero earum quod sapiente!"
+            description: "If you have ever taken a design or art class, you may already be familiar with design critiques. But as you grow as a designer, how do you know what to look out for when giving and receiving a design critique? In this article, we’ll share our tips."
         },
     ]
     const [clientReview, setClientReview] = useState([])
@@ -35,7 +35,7 @@ const ClientsFeedback = () => {
                     feedBack.map(client => {
 
                         return (
-                            <div className='border rounded-lg p-5'
+                            <div className='border rounded-lg p-5 hover:translate-y-5 duration-300 shadow-2xl'
                                 key={client._id}
                             >
                                 <div className='flex justify-start items-center'>
