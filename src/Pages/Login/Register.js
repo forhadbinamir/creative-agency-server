@@ -4,7 +4,6 @@ import google from '../../images/Login/google-logo.png'
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../Firebase.init';
 import Loading from '../../Hooks/Loading';
-import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 const Register = () => {
     const navigate = useNavigate()
@@ -15,27 +14,24 @@ const Register = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        console.log(data)
+        createUserWithEmailAndPassword(data.email, data.password)
+    }
     useEffect(() => {
         if (user || googleUser) {
             navigate('/login')
         }
     }, [user, googleUser, navigate])
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-        console.log(data)
-        const email = data.email;
-        const password = data.password;
-        createUserWithEmailAndPassword(email, password)
-        toast('send email verification')
-        console.log(email, password)
-    }
     if (loading || googleLoading) {
         return <Loading />
     }
     let textError;
     if (error || googleError) {
         return (
-            textError = <p>Error: {error.message}</p>
+            textError = <p className='text-red-500'><small>{error?.message}{googleError?.message} </small></p>
         );
     }
     return (
@@ -65,7 +61,9 @@ const Register = () => {
                     <input {...register("confirmPassword", { required: true })} className='w-full mb-2 p-3 border rounded' type="password" placeholder='Confirm Password' name="confirmPassword" />
                     {errors.confirmPassword?.type === 'required' && <span className='text-red-500'>Confirm Password is required</span>}
 
-                    <input className='px-3 py-2 bg-accent font-bold rounded' type="submit" value='Register' />
+                    <div>
+                        <input className='px-3 py-2 bg-accent font-bold rounded' type="submit" value='Register' />
+                    </div>
                     {textError}
                     <div className="divider">OR</div>
                 </form>

@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import google from '../../images/Login/google-logo.png'
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../Firebase.init';
 import Loading from '../../Hooks/Loading';
+import { toast } from 'react-toastify';
 const Login = () => {
+    const emailRef = useRef()
+    const passwordRef = useRef()
     const navigate = useNavigate()
     const [
         signInWithEmailAndPassword,
@@ -13,6 +16,9 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+    const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(
+        auth
+    );
 
     useEffect(() => {
         if (user || googleUser) {
@@ -21,11 +27,23 @@ const Login = () => {
     }, [user, googleUser, navigate])
     const handleLogin = (e) => {
         e.preventDefault()
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
         signInWithEmailAndPassword(email, password)
         console.log(email, password)
         e.target.reset()
+    }
+    const handleResetPassword = async () => {
+        const email = emailRef.current.value;
+        console.log(email)
+        await sendPasswordResetEmail(email)
+        if (!email) {
+            toast('Please enter your valid email address')
+        }
+        else {
+            toast('Check Your email')
+        }
+
     }
     if (loading || googleLoading) {
         return <Loading />
@@ -41,9 +59,9 @@ const Login = () => {
             <div className='border mt-20 p-5 lg:w-[50%] sm:w-[100%] mx-auto'>
                 <h2 className='text-2xl text-center font-bold'>Login</h2>
                 <form onSubmit={handleLogin} className='px-10 py-5 rounded'>
-                    <input className='w-full mb-2 p-3 border rounded' type="email" placeholder='Email' name="email" required />
-                    <input className='w-full mb-2 p-3 border rounded' type="password" placeholder='Password' name="password" required />
-                    <p className='text-right text-blue-600'>Reset password</p>
+                    <input className='w-full mb-2 p-3 border rounded' type="email" placeholder='Email' ref={emailRef} name="email" required />
+                    <input className='w-full mb-2 p-3 border rounded' type="password" placeholder='Password' ref={passwordRef} name="password" required />
+                    <p onClick={() => handleResetPassword()} className='text-right cursor-pointer text-blue-600'>Reset password</p>
                     <input className='px-3 py-2 bg-accent font-bold rounded' type="submit" value='Login' />
                     {textError}
                     <div className="divider">OR</div>
