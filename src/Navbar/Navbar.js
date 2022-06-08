@@ -3,11 +3,16 @@ import { Link, useLocation } from 'react-router-dom';
 import { MenuIcon, XIcon } from '@heroicons/react/solid'
 import logo from '../images/logo/logo-computer.png'
 import './Navbar.css'
+import { signOut } from 'firebase/auth';
+import auth from '../Pages/Firebase.init';
+import { useAuthState } from 'react-firebase-hooks/auth';
 const Navbar = () => {
     const [open, setOpen] = useState(false)
     const { pathname } = useLocation()
-
-
+    const [user] = useAuthState(auth)
+    const logOut = () => {
+        signOut(auth)
+    }
     return (
         <nav style={{ backgroundColor: `${(pathname === '/home' || pathname === '/') ? 'transparent' : '#22c55e'} ` }} className={`navbar flex justify-between items-center`}>
             <Link to='/' className='text-white pl-12 w-32 '><img className='rounded-lg' src={logo} alt="" /></Link>
@@ -19,7 +24,17 @@ const Navbar = () => {
                 <Link className='nav-link mr-4 text-white' to='/portfolio'>Our Portfolio</Link>
                 <Link className='nav-link mr-4 text-white' to='/team'>Our Team</Link>
                 <Link className='nav-link mr-4 text-white' to='/contact'>Contact Us</Link>
-                <Link className='nav-link mr-4 text-white' to='/login'><button className='btn btn-sm btn-accent hover:text-white'>Login</button></Link>
+
+                {
+                    user ?
+                        <Link onClick={logOut} className='nav-link mr-4 text-white' to=''><button className='btn btn-sm btn-accent hover:text-white'>Sign Out</button></Link>
+                        :
+                        <Link className='nav-link mr-4 text-white' to='/login'><button className='btn btn-sm btn-accent hover:text-white'>Login</button></Link>
+                }
+
+
+
+
             </ul>
         </nav>
     );

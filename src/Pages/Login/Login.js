@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import google from '../../images/Login/google-logo.png'
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../Firebase.init';
@@ -9,6 +9,7 @@ const Login = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const navigate = useNavigate()
+    const location = useLocation()
     const [
         signInWithEmailAndPassword,
         user,
@@ -19,12 +20,12 @@ const Login = () => {
     const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(
         auth
     );
-
+    let from = location.state?.from?.pathname || "/";
     useEffect(() => {
         if (user || googleUser) {
-            navigate('/home')
+            navigate(from, { replace: true });
         }
-    }, [user, googleUser, navigate])
+    }, [user, googleUser, navigate, from])
     const handleLogin = (e) => {
         e.preventDefault()
         const email = emailRef.current.value;
